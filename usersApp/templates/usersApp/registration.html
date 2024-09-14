@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HardwareControl</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white">
+            <div class="max-w-7xl mx-auto py-4 px-4">
+                <a href="{%url 'index'%}">
+                    <h1 class="text-2xl font-bold">
+                        Hardware<span class="bg-blue-500 rounded-md py-1 px-2 text-white">Control</span>
+                    </h1>
+                </a>
+            </div>
+        </header>
+
+        <!-- Registration Form -->
+        <div class="flex items-center justify-center min-h-screen bg-gray-100">
+            <form class="bg-white shadow-lg rounded-lg px-8 py-6 space-y-6 w-96" action="{% url 'registration' %}"
+                method="POST" enctype="multipart/form-data" id="reg_Form">
+                {% csrf_token %}
+                <h2 class="text-2xl font-bold text-center">Реєстрація</h2>
+                <div>
+                    <label for="login" class="block text-gray-700 font-bold mb-2">Логін</label>
+                    <input type="text" name="login" id="login"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-lg" placeholder="Введіть ваш логін"
+                        required />
+                </div>
+                <div>
+                    <label for="university" class="block text-gray-700 font-bold mb-2">Університет</label>
+                    <input type="text" name="university" id="university"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-lg"
+                        placeholder="Введіть назву університету" required />
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Пошта</label>
+                    <input type="email" name="email" id="email"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-lg" placeholder="Введіть вашу пошту"
+                        required />
+                </div>
+                <div>
+                    <label for="password1" class="block text-gray-700 font-bold mb-2">Пароль</label>
+                    <input type="password" name="password1" id="password"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-lg" placeholder="Введіть ваш пароль"
+                        required />
+                </div>
+                <div>
+                    <label for="password2" class="block text-gray-700 font-bold mb-2">Повторіть пароль</label>
+                    <input type="password" name="password2" id="confirm-password"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-lg" placeholder="Повторіть ваш пароль"
+                        required />
+
+                    <input type="text" name="status" value="A" hidden>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                        Зареєструватися
+                    </button>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Вже маєте обліковий запис?
+                    <a href="{% url 'login' %}" class="text-blue-500">Увійти</a>
+                </p>
+            </form>
+            {% if form.errors %}
+            <p class="error-message">Пароль не співпадає або ненадійний</p>
+            {% endif %}
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-blue-500 py-8 text-white">
+            <div class="max-w-7xl mx-auto text-center">
+                <p>© Бичковський Ігор</p>
+                <p>Кафедра АСУ НУ "ЛП". Львів 2024</p>
+            </div>
+        </footer>
+    </div>
+    <script src="{% static 'JQ/jquery-3.7.0.min.js' %}?s={{ STATIC_VERSION }}"></script>
+    <script src="{%static 'reg/js/main.js'%}?q={{ STATIC_VERSION }}"></script>
+
+</body>
+
+</html>

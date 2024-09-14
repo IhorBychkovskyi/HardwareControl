@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HardwareControl</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{%static 'login/css/style.css'%}">
+</head>
+
+<body>
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white">
+            <div class="max-w-7xl mx-auto py-4 px-4">
+                <a href="{%url 'index'%}">
+                    <h1 class="text-2xl font-bold">
+                        Hardware<span class="bg-blue-500 rounded-md py-1 px-2 text-white">Control</span>
+                    </h1>
+                </a>
+            </div>
+        </header>
+
+        <!-- Login Form -->
+        <div class="flex items-center justify-center min-h-screen bg-gray-100">
+
+            <form class="bg-white shadow-lg rounded-lg px-8 py-6 space-y-6 w-96" action="{% url 'login' %}"
+                method="POST">
+                {% csrf_token %}
+                {% if form.errors %}
+                <p class="error-message">Помилка! Схоже ви ввели неправильний пароль або логін</p>
+                {% endif %}
+
+
+                <h2 class="text-2xl font-bold text-center">Вхід</h2>
+                <div>
+                    <label for="{{form.username.id_for_label}}" class="block text-gray-700 font-bold mb-2">Логін</label>
+                    {{form.username }}
+                </div>
+                <div>
+                    <label for="{{form.password.id_for_label}}"
+                        class="block text-gray-700 font-bold mb-2">Пароль</label>
+                    {{form.password }}
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                        Ввійти
+                    </button>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Ще не маєте облікового запису?
+                    <a href="{%url 'registration'%}" class="text-blue-500">Зареєструватися</a>
+                </p>
+            </form>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-blue-500 py-8 text-white">
+            <div class="max-w-7xl mx-auto text-center">
+                <p>© Бичковський Ігор</p>
+                <p>Кафедра АСУ НУ "ЛП". Львів 2024</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

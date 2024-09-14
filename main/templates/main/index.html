@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HardwareControl</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white">
+            <div class="max-w-7xl mx-auto py-4 px-4">
+                <a href="{%url 'index'%}">
+                    <h1 class="text-2xl font-bold">
+                        Hardware<span class="bg-blue-500 rounded-md py-1 px-2 text-white">Control</span>
+                    </h1>
+                </a>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="relative">
+            <div class="mx-auto">
+                <div>
+                    <img class="w-full h-screen object-cover" src="{%static 'aboutUs/img/mainBg.png'%}"
+                        alt="HardwareControl" />
+                </div>
+                <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <h2 class="text-4xl font-bold mb-4">
+                            Ласкаво просимо до HardwareControl
+                        </h2>
+                        <p class="text-xl">
+                            Відстежуйте та керуйте комп'ютерним обладнанням з легкістю.
+                        </p>
+                        <div class="mt-8">
+                            <a href="{%url 'login'%}"
+                                class="text-white bg-blue-500 hover:bg-blue-600 py-3 px-6 rounded text-lg font-bold mr-4">Увійти</a>
+                            <a href="{%url 'registration'%}"
+                                class="text-white bg-blue-500 hover:bg-blue-600 py-3 px-6 rounded text-lg font-bold">Зареєструватися</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section class="bg-white py-10 relative px-8">
+            <div class="max-w-7xl mx-auto h-screen py-24 flex flex-col justify-evenly">
+                <h2 class="text-center text-4xl font-bold mb-4 text-gray-700">
+                    Про HardwareControl
+                </h2>
+                <p class="text-lg text-gray-700">
+                    <span class="font-bold">HardwareControl</span> - це інноваційна
+                    компанія, яка спеціалізується на наданні онлайн сервісу для обліку
+                    комп'ютерної техніки. Наш сервіс дозволяє вам легко і швидко
+                    відстежувати всі ваші комп'ютери, монітори, принтери та інші
+                    пристрої в одному місці. Зручний інтерфейс і функціонал
+                    HardwareControl дозволяють вам ефективно керувати всіма пристроями і
+                    забезпечувати надійну роботу вашої комп'ютерної інфраструктури.
+                    HardwareControl надає вам детальну статистику і аналітику щодо
+                    використання ресурсів, що допомагає вам приймати обґрунтовані
+                    рішення щодо оптимізації інфраструктури.
+                </p>
+
+                <div class="flex flex-wrap justify-center mt-8">
+                    <div class="w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div class="bg-white rounded-lg shadow-2xl h-full">
+                            <div class="px-8 py-6">
+                                <div class="font-bold text-xl mb-2">Повний контроль</div>
+                                <p class="text-gray-700 text-base">
+                                    Завдяки HardwareControl ви можете легко відстежувати стан та
+                                    використання всього комп'ютерного обладнання у вашій
+                                    компанії.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div class="bg-white rounded-lg shadow-2xl h-full">
+                            <div class="px-8 py-6">
+                                <div class="font-bold text-xl mb-2">Управління ресурсами</div>
+                                <p class="text-gray-700 text-base">
+                                    HardwareControl дозволяє ефективно керувати ресурсами
+                                    комп'ютерної інфраструктури та забезпечувати надійну роботу
+                                    вашого обладнання.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div class="bg-white rounded-lg shadow-2xl h-full">
+                            <div class="px-8 py-6">
+                                <div class="font-bold text-xl mb-2">
+                                    Статистика та аналітика
+                                </div>
+                                <p class="text-gray-700 text-base">
+                                    HardwareControl надає вам детальну статистику та аналітику
+                                    щодо використання комп'ютерних ресурсів, що допомагає вам
+                                    приймати обґрунтовані рішення щодо оптимізації вашої
+                                    інфраструктури.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Screen -->
+        <div class="w-full h-screen bg-gray-100 flex items-center justify-center px-4">
+            <div class="max-w-7xl mx-auto px-8 py-24">
+                <div class="bg-white rounded-lg shadow-xl p-8">
+                    <h2 class="text-4xl font-bold mb-6">Про нас</h2>
+                    <p class="text-lg text-gray-700">
+                        HardwareControl є лідером в галузі обліку комп'ютерної техніки.
+                        Наша компанія пропонує інноваційні рішення, які допомагають
+                        організаціям ефективно керувати своїм обладнанням.
+                    </p>
+                    <p class="text-lg text-gray-700 mt-4">
+                        Ми забезпечуємо надійний і простий у використанні сервіс, який
+                        дозволяє вам відстежувати, контролювати та аналізувати ваше
+                        комп'ютерне обладнання зручним способом.
+                    </p>
+                    <ul class="list-disc mt-6 ml-8 text-lg text-gray-700">
+                        <li>Надійний облік комп'ютерної техніки</li>
+                        <li>Ефективне керування обладнанням</li>
+                        <li>Простий інтерфейс користувача</li>
+                        <li>Детальна статистика та аналітика</li>
+                        <li>Підтримка різних типів пристроїв</li>
+                        <li>Зручний доступ до інформації</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-blue-500 py-8 text-white">
+            <div class="max-w-7xl mx-auto text-center">
+                <p>© Бичковський Ігор</p>
+                <p>Кафедра АСУ НУ "ЛП". Львів 2024</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

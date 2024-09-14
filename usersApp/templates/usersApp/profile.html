@@ -1,0 +1,414 @@
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Облік</title>
+    
+    <link rel="stylesheet" href="{%static 'profile/css/style.css'%}?q={{ STATIC_VERSION }}">
+
+
+</head>
+ 
+<body>
+    <header class="header">
+        <div class="container header__container">
+
+        <button class="header__burger-btn" id="burger">
+            <span></span><span></span><span></span>
+        </button>
+
+        <a href="#" class="logo">
+            <strong>Hardware<span>Control</span></strong>
+        </a>
+
+        <nav class="menu">
+            <ul class="menu__list">
+            {% if user.status == "A" %}
+            
+                <li class="menu__item">
+                  <button class="menu__link" id = "addUserButton" onclick="showAddUserForm()">
+                     Додати користувача
+                  </button>
+                </li>
+            {% endif %}
+           
+
+                <li class="menu__item">
+                    <a class="menu__link" href="{%url 'index'%}">
+                       Вихід
+                    </a>
+                </li>
+
+        
+            </ul>
+        </nav>
+        </div>
+    </header>
+
+   
+
+
+    <main>
+        <div class="list-institute">
+            <button class="showPC" data-value="0">Склад</button>
+            {%for i in Institutes%}
+            <button class="showPC" data-value="{{i.id}}">{{i.institutes_name}}</button>
+            {% endfor %}
+            {% if user.status == "A" %}
+            <button class="button-add" onclick="addInstitution()">Додати інситут</button>
+            {% endif %}
+           
+        </div>
+
+        <div class="table-info-container">
+            {% if user.status == "A" %}
+            <button class="addButton" onclick="addPC()" ><strong>Додати комп'ютер</strong></button>
+            {% endif %}
+          
+          <table class="table-info">
+            <tr>
+              <th>Інвертар.номер</th>
+              <th>Модель</th>
+              <th>Дата придб.</th>
+              <th>Стан</th>
+              <th>Операційна сис.</th>
+              <th>Процесор</th>
+              <th>ОЗП</th>
+              <th>Відео-карта</th>
+              <th>Пам'ять</th>
+              <th>Кабінет</th>
+              <th>Корпус</th>
+            </tr>
+
+            {%for ps in PC%}
+                <tr>
+                    <th hidden>{{ps.id}}</th>
+                    <th>{{ps.inventory_number}}</th>
+                    <th>{{ps.model}}</th>
+                    <th>{{ ps.formatted_date }}</th>
+                    <th>{{ps.get_status_display}}</th>
+                    <th>{{ps.os}}</th>
+                    <th>{{ps.processor}}</th>
+                    <th>{{ps.RAM}}</th>
+                    <th>{{ps.video_core}}</th>
+                    <th>{{ps.memory}}</th>
+                    <th>{{ps.office}}</th>
+                    <th>{{ps.corps}}</th>
+                    <th hidden>{{ps.institutes_id}}</th>
+                    <th hidden>{{ps.description}}</th>
+                </tr>
+                <div class="context-menu" >
+                    <div class="context-menu-container">
+                        <img src="{% static '' %}{{ ps.image }}" alt="">
+                        <div class="decription">
+                            <h3>Опис</h3>
+                            <p>{{ps.description}}</p>
+                        </div>
+                        
+                        
+                    </div>
+                  
+                </div>
+            {% endfor %}
+        
+          </table>
+        </div>
+
+
+    </main>
+
+
+    
+
+    <div id="modalAddPC" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+            
+            <form action="{% url 'profile' %}" class="edit-form" id = "addPCform" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="titel"></h1>
+
+                <div class="form_group">
+                    
+                    <input type="text" class="form_input" name = "Inventory_number">
+                    <label for="" class="form_label">Інвентарний номер</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Model">
+                    <label for="" class="form_label">Модель</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="date" class="form_input" name = "Purchase_data">
+                    <label for="" class="form_label">Дата придбання</label>
+                </div>
+
+                <div class="form_group">
+                    <select  name="status"  class="form_input" >
+                        <option value="W">Працює</option>
+                        <option value="DW">Не працює</option>
+                        <option value="R">На ремонті</option>
+                    </select>
+                    <label for="" class="form_label">Стан</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "os">
+                    <label for="" class="form_label">Операційна система</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Processor">
+                    <label for="" class="form_label">Процесор</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="RAM">
+                    <label for="" class="form_label">Оперативна пам'ять</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Video_cade">
+                    <label for="" class="form_label">Відео-карта</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Memory">
+                    <label for="" class="form_label">Пам'ять</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Office">
+                    <label for="" class="form_label">Кабінет</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Corps">
+                    <label for="" class="form_label">Корпус</label>
+                </div>
+
+                <div class="form_group">
+                    <select  name="institution"  class="form_input">
+                        <option value="null">Склад</option>
+                        {%for i in Institutes%}
+                        <option value={{i.id}}>{{i.institutes_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="" class="form_label">Інститут</label>
+                </div> 
+
+                <div  class="AddPCDS">
+                    <textarea name="description" id="AddPCDS"></textarea  >
+                    <label for="description" class="form_label">Опис</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="file"  class="file_upload" name="image" id="imageAddPC" onchange="showFileName(this)">
+                    <label for="imageAddPC" class = "file_upload">ЗАВАНТАЖИТИ ФОТО</label>
+                    <span class="file-name">Файл не вибрано</span>
+                </div>
+                <input type="text" hidden value="{{user.university_id}}" name="university">
+                
+
+                <button id = "addPC">Додати</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div id="modalEditPC" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+            
+            <form action="{% url 'profile' %}" class="edit-form" enctype="multipart/form-data" id="PC_Edit_Form">
+                {% csrf_token %}
+                <h1 class="titel"></h1>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "id" hidden>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Inventory_number">
+                    <label for="" class="form_label">Інвентарний номер</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Model">
+                    <label for="" class="form_label">Модель</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="date" class="form_input" name = "Purchase_data">
+                    <label for="" class="form_label">Дата придбання</label>
+                </div>
+
+                <div class="form_group">
+                    <select  name="status"  class="form_input">
+                        <option value="W">Працює</option>
+                        <option value="DW">Не працює</option>
+                        <option value="R">На ремонті</option>
+
+                    </select>
+                    <label for="" class="form_label">Стан</label>
+                </div>
+
+                <div class="form_group" >
+                    <input type="text" class="form_input" name="os">
+                    <label for="" class="form_label">Операційна система</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Processor">
+                    <label for="" class="form_label">Процесор</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="RAM">
+                    <label for="" class="form_label">Оперативна пам'ять</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Video_cade">
+                    <label for="" class="form_label">Відео-карта</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Memory">
+                    <label for="" class="form_label">Пам'ять</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name = "Office">
+                    <label for="" class="form_label">Кабінет</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="Corps">
+                    <label for="" class="form_label">Корпус</label>
+                </div>
+
+                <div class="form_group">
+                    <select  name="institution"  class="form_input" name="institution">
+                        <option value="null">Склад</option>
+                        {%for i in Institutes%}
+                        <option value={{i.id}}>{{i.institutes_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="" class="form_label">Інститут</label>
+                </div>
+
+                <div  class="AddPCDS">
+                    <textarea name="description" id="AddPCDS" class="form_input" name="decription"></textarea  >
+                    <label for="description" class="form_label">Опис</label>
+                </div>
+
+                <div class="form_group">
+                    <input type="file"  class="file_upload" name="image" id="imageEditPC" onchange="showFileName(this)">
+                    <label for="imageEditPC" class = "file_upload">ЗАВАНТАЖИТИ ФОТО</label>
+                    <span class="file-name">Файл не вибрано</span>
+                </div>
+
+
+                <button id = "deletePC" >Видалити</button>
+                <button type="submit">Зберегти</button>
+
+
+
+            </form>
+
+        </div>
+    </div>
+
+    <div id="editInstitution" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+            <form action="{% url 'profile' %}" class="edit-form-institution" id = "Edit_Institution_Form" enctype="multipart/form-data">
+                <div class="form_group" >
+                    <input type="text" class="form_input" hidden name="id">
+                </div>
+                <div class="form_group" >
+                    <label for="" class="form_label">Назва інституту</label>
+                    <input type="text" class="form_input" name="name">
+                </div>
+                <button id = "saveDataInsitution">Зберегти</button>
+                <button id = "deleteInstitution">Видалити</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="modalAddInstitution" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+            <form action="{% url 'profile' %}" class="edit-form-institution" id="addInstitutionForm">
+                <div class="form_group">
+                    <label for="" class="form_label">Назва інституту</label>
+                    <input type="text" class="form_input" name="institution-name">
+                </div>
+                <button id = "addInsitutionButton">Додати</button>
+            </form>
+
+        </div>
+    </div>
+    
+
+    <div id="modalAddUser" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+            <form action="{% url 'profile' %}" class="edit-form-institution" id="addUserForm">
+                <div class="form_group">
+               
+                    <input type="text" class="form_input" name="login">
+                    <label for="" class="form_label">Логін</label>
+                </div>
+
+                <input type="text" class="form_input" name="university_id" hidden value="{{user.university_id}}">
+
+                <div class="form_group">
+                    <input type="text" class="form_input" name="email">
+                    <label for="" class="form_label">Електорна пошта</label>
+                </div>
+
+                <div class="form_group">
+                  
+                    <input type="text" class="form_input" name="password">
+                    <label for="" class="form_label">Пароль</label>
+                </div>
+
+                <div class="form_group">
+                    <select  class="form_input" name="status">
+                        <option value="A">Адмін</option>
+                        <option value="U">Користувач</option>
+                    </select>
+                    <label for="" class="form_label">Статус</label>
+                </div>
+
+                <button id = "addUserButtonForm">Додати</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="{% static 'JQ/jquery-3.7.0.min.js' %}?v={{ STATIC_VERSION }}"></script>
+
+    <script src="{%static 'profile/js/main.js'%}?q={{ STATIC_VERSION }}"></script>
+
+    {% if user.status == "A" %}
+    <script src="{%static 'profile/js/edit.js'%}?q={{ STATIC_VERSION }}"></script>
+    {% endif %}
+   
+</body>
+
+  
+
+</html>
+
+
+
+
